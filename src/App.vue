@@ -1,28 +1,264 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <img alt="Vue logo" src="./assets/logo.png" />
+
+    <button @click="confirm('critical')">Critical</button>
+    <button @click="confirm('information')">Information</button>
+    <button @click="confirm('success')">Success</button>
+    <button @click="confirm('warning')">Warning</button>
+    <button @click="alert('warning')">Alert</button>
+    <button @click="done()">Donr</button>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
 
 export default {
   name: 'App',
-  components: {
-    HelloWorld
+  methods: {
+    confirm(state) {
+      this.$confirm(
+        {
+          title: 'Deactive account',
+          text: 'Are you sure you want to deactivate your acocunt? By doing this you will lose all of your saved data and will not be able to retrive it.',
+          cta: this.hej,
+          state
+        });
+    },
+    alert(state) {
+      this.$alert(
+        {
+          title: 'Deactive account',
+          text: 'Are you sure you want to deactivate your acocunt? By doing this you will lose all of your saved data and will not be able to retrive it.',
+          cta: this.hej,
+          state
+        });
+    },
+    done() {
+      this.$notification(
+        {
+          title: 'Success! 😂',
+          text: 'We have succesfully added <strong>Acti ity 57</strong> to your acocunt!',
+          state: 'success'
+        });
+    },
   }
 }
 </script>
 
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+.jackbox {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.jackbox * {
+  box-sizing: border-box;
+}
+
+.jb-modal {
+  padding: 30px 40px;
+  width: 90%;
+  max-width: 475px;
+  left: 50%;
+  transform: translate(-50%, calc(-100% - 40px));
+  position: fixed;
+  top: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  background: #fff;
+  padding: 0;
+  box-shadow: 0 5px 20px 7px #dbe0e3;
+  border-top: 4px solid var(--color-border);
+}
+
+/* .jb-modal--warning {
+  background: #fffcf4;
+  border: 4px solid #fae6aa;
+  border-radius: 10px;
+} */
+
+.jb-modal--warning {
+  --color-action-button-background: #fff3e0;
+  --color-action-button-text: #ffb300;
+  --color-border: #ffb300;
+}
+
+.jb-modal--critical {
+  --color-action-button-background: #fce8e8;
+  --color-action-button-text: #c44545;
+  --color-border: #dc3131;
+}
+
+.jb-modal--information {
+  --color-action-button-background: #e1f5fe;
+  --color-action-button-text: #2196f3;
+  --color-border: #2196f3;
+}
+
+.jb-modal--success {
+  --color-action-button-background: #e8f5e9;
+  --color-action-button-text: #8bc34a;
+  --color-border: #8bc34a;
+}
+
+.jb-modal--alert {
+}
+
+.jb-modal__title {
+  color: #55585d;
+  font-weight: 700;
+  margin: 5px 0 10px;
+  line-height: 25px;
+}
+
+.jb-modal__text {
+  color: #71777d;
+  line-height: 1.5;
+}
+
+.jb-modal__body {
+  flex: 1;
+  padding: 25px 20px;
+  display: flex;
+}
+
+.jb-modal__icon {
+  margin-right: 15px;
+}
+
+.jb-modal__content {
+  flex: 1;
+}
+
+.jb-modal__footer {
+  background: #f8f9fa;
+  padding: 15px 20px;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.jb-modal__footer--center {
+  justify-content: center;
+}
+
+.jb-modal__footer--center .button {
+  margin: 0;
+}
+
+/* .jb-modal--show {
+  transform: translate(-50%, 0);
+} */
+
+.jackbox__backdrop {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  opacity: 0;
+  background: rgba(245, 248, 250, 0.7);
+}
+
+.jackbox .jackbox__backdrop {
+  transition: all ease 0.3s 0.2s;
+}
+.jackbox--show .jackbox__backdrop {
+  visibility: visible;
+  opacity: 1;
+  transition: all ease 0.3s;
+}
+
+.jackbox .jb-modal {
+  transition: all ease 0.3s;
+}
+.jackbox--show .jb-modal {
+  transform: translate(-50%, 40px);
+  transition: all ease 0.3s 0.2s;
+}
+
+.button {
+  font-weight: 700;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  margin-left: 20px;
+}
+
+.button--action {
+  background: var(--color-action-button-background);
+  color: var(--color-action-button-text);
+  padding: 10px 20px;
+}
+
+.button--cancel {
+  background: transparent;
+  color: #9ea1a5;
+}
+
+.box__icon {
+  margin-right: 12px;
+}
+
+.box__icon__image {
+  width: 25px;
+  height: 25px;
+  background: #fff;
+  color: var(--color-border);
+  display: block;
+  border-radius: 50%;
+  border: 2.5px solid var(--color-border);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+}
+
+.box__outline {
+  background: var(--color-action-button-background);
+  border-radius: 50%;
+  padding: 7px;
+}
+
+.jb-modal__input__wrapper {
+  margin-top: 15px;
+}
+
+.jb-modal__input {
+  width: 100%;
+  padding: 7px;
+  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
+    sans-serif, Apple Color Emoji, Segoe UI Emoji;
+  border: 1px solid #e8e9eb;
+  border-radius: 3px;
+  outline: none;
+  transition: all ease 0.3s;
+}
+
+.jb-modal__input:hover {
+  border: 1px solid #ccc;
+}
+
+.jb-modal__input:focus {
+  border: 1px solid #666;
+}
+
+.jb-modal__input__label {
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.modal-open {
+  overflow: hidden;
 }
 </style>
