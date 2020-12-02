@@ -1,7 +1,26 @@
 {
-  "name": "plugin",
+  "name": "vue-jackbox",
+  "description": "A small vue plugin to display nice looking alerts",
   "version": "0.1.0",
-  "private": true,
+  "private": false,
+  "main": "dist/vue-jackbox.common.js",
+  "files": [
+    "dist/*"
+  ],
+  "author": {
+    "name": "Jonathan Andersson",
+    "email": "ja1984@gmail.com"
+  },
+  "repository": "https://github.com/ja1984/vue-jackbox",
+  "bugs": "https://github.com/ja1984/vue-jackbox/issues",
+  "keywords": [
+    "vue",
+    "alert",
+    "confirm",
+    "notification",
+    "prompt"
+  ],
+  "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
