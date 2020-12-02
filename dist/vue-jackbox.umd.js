@@ -2384,8 +2384,6 @@ var globalProps = {
 var modal_getDefaultProps = function getDefaultProps(userProps, specificProps, globalOverrides) {
   var global = _objectSpread2(_objectSpread2({}, globalProps), globalOverrides);
 
-  console.log(global);
-
   var ok = _objectSpread2(_objectSpread2({}, global.ok), userProps.ok || {});
 
   var cancel = _objectSpread2(_objectSpread2({}, globalProps.cancel), userProps.cancel || {});
@@ -2407,6 +2405,11 @@ var styles = __webpack_require__("3a62");
 var VueJackBox = {
   install: function install(Vue) {
     Vue.prototype.$confirm = function (userProps) {
+      if (typeof userProps === 'undefined') {
+        console.warn('VueJackBox - You need to add at least some properties');
+        return;
+      }
+
       var documentBody = document.body;
       if (!documentBody) return;
       var properties = modal_getDefaultProps(userProps, {});
@@ -2420,6 +2423,11 @@ var VueJackBox = {
     };
 
     Vue.prototype.$alert = function (userProps) {
+      if (typeof userProps === 'undefined') {
+        console.warn('VueJackBox - You need to add at least some properties');
+        return;
+      }
+
       var documentBody = document.body;
       if (!documentBody) return;
       var properties = modal_getDefaultProps(userProps, {
@@ -2439,6 +2447,11 @@ var VueJackBox = {
     };
 
     Vue.prototype.$prompt = function (userProps) {
+      if (typeof userProps === 'undefined') {
+        console.warn('VueJackBox - You need to add at least some properties');
+        return;
+      }
+
       var documentBody = document.body;
       if (!documentBody) return;
       var properties = modal_getDefaultProps(userProps, {});
@@ -2452,6 +2465,11 @@ var VueJackBox = {
     };
 
     Vue.prototype.$notification = function (userProps) {
+      if (typeof userProps === 'undefined') {
+        console.warn('VueJackBox - You need to add at least some properties');
+        return;
+      }
+
       var documentBody = document.body;
       if (!documentBody) return;
       var properties = modal_getDefaultProps(userProps, {

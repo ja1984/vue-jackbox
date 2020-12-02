@@ -4,6 +4,10 @@ import './styles.css'
 const VueJackBox = {
   install(Vue) {
     Vue.prototype.$confirm = function (userProps) {
+      if(typeof userProps === 'undefined') {
+        console.warn('VueJackBox - You need to add at least some properties');
+        return;
+      }
       const documentBody = document.body;
       if (!documentBody) return;
 
@@ -17,6 +21,10 @@ const VueJackBox = {
     }
 
     Vue.prototype.$alert = function (userProps) {
+      if(typeof userProps === 'undefined') {
+        console.warn('VueJackBox - You need to add at least some properties');
+        return;
+      }
       const documentBody = document.body;
       if (!documentBody) return;
 
@@ -30,6 +38,10 @@ const VueJackBox = {
     }
 
     Vue.prototype.$prompt = function (userProps) {
+      if(typeof userProps === 'undefined') {
+        console.warn('VueJackBox - You need to add at least some properties');
+        return;
+      }
       const documentBody = document.body;
       if (!documentBody) return;
 
@@ -44,6 +56,10 @@ const VueJackBox = {
     }
 
     Vue.prototype.$notification = function (userProps) {
+      if(typeof userProps === 'undefined') {
+        console.warn('VueJackBox - You need to add at least some properties');
+        return;
+      }
       const documentBody = document.body;
       if (!documentBody) return;
       

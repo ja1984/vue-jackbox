@@ -175,7 +175,6 @@ const globalProps = {
 
 const getDefaultProps = (userProps, specificProps, globalOverrides) => {
   const global = {...globalProps, ...globalOverrides}
-  console.log(global);
   const ok = { ...global.ok, ...(userProps.ok || {}) };
   const cancel = { ...globalProps.cancel, ...(userProps.cancel || {}) };
 
