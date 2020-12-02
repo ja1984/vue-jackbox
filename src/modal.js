@@ -2,7 +2,7 @@ const createModal = (props) => {
   const documentBody = document.body;
   if (!documentBody) return;
 
-  documentBody.classList.add('modal-open');
+  documentBody.classList.add('jb-modal-open');
 
   const state = props.state || 'information';
   const type = props.type || 'alert';
@@ -20,7 +20,7 @@ const createModal = (props) => {
     jackbox.classList.remove('jackbox--show');
     setTimeout(() => {
       documentBody.removeChild(jackbox);
-      documentBody.classList.remove('modal-open');
+      documentBody.classList.remove('jb-modal-open');
     }, 300);
   }
 
@@ -37,8 +37,8 @@ const createModal = (props) => {
   const icon = document.createElement('aside');
   icon.className = "jb-modal__icon";
 
-  icon.innerHTML = `<div class="box__outline">
-      <i class="box__icon__image">
+  icon.innerHTML = `<div class="jb-modal__box__outline">
+      <i class="jb-modal__box__icon__image">
       !
       </div>`
   const footer = document.createElement('div');
@@ -50,7 +50,7 @@ const createModal = (props) => {
     }
 
     const cancelButton = document.createElement('button')
-    cancelButton.className = "button button--cancel";
+    cancelButton.className = "jb-modal__button jb-modal__button--cancel";
     cancelButton.innerText = props.cancelButtonText
     if(props.cancelCallback) {
       cancelButton.addEventListener('click', props.cancelCallback, { once: true });
@@ -58,7 +58,7 @@ const createModal = (props) => {
     cancelButton.addEventListener('click', close, { once: true });
 
     const cta = document.createElement('button')
-    cta.className = "button button--action";
+    cta.className = "jb-modal__button jb-modal__button--action";
     cta.innerHTML = props.ctaButtonText
     if(cta.ctaCallback) {
       cta.addEventListener('click', props.ctaCallback, { once: true });

@@ -133,7 +133,7 @@
   transition: all ease 0.3s 0.2s;
 }
 
-.button {
+.jb-modal__button {
   font-weight: 700;
   border: none;
   border-radius: 5px;
@@ -142,22 +142,22 @@
   margin-left: 20px;
 }
 
-.button--action {
+.jb-modal__button--action {
   background: var(--color-action-button-background);
   color: var(--color-action-button-text);
   padding: 10px 20px;
 }
 
-.button--cancel {
+.jb-modal__button--cancel {
   background: transparent;
   color: #9ea1a5;
 }
 
-.box__icon {
+.jb-modal__box__icon {
   margin-right: 12px;
 }
 
-.box__icon__image {
+.jb-modal__box__icon__image {
   width: 25px;
   height: 25px;
   background: #fff;
@@ -175,7 +175,7 @@
   font-size: 14px;
 }
 
-.box__outline {
+.jb-modal__box__outline {
   background: var(--color-action-button-background);
   border-radius: 50%;
   padding: 7px;
@@ -209,6 +209,6 @@
   font-weight: 700;
 }
 
-.modal-open {
+.jb-modal-open {
   overflow: hidden;
 }

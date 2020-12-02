@@ -23,7 +23,7 @@
   "license": "MIT",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build --target lib --name vue-jackbox ./src/vue-jackbox.js",
     "lint": "vue-cli-service lint"
   },
   "dependencies": {

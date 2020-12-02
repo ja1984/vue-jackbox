@@ -2200,7 +2200,7 @@ function _objectSpread2(target) {
 var createModal = function createModal(props) {
   var documentBody = document.body;
   if (!documentBody) return;
-  documentBody.classList.add('modal-open');
+  documentBody.classList.add('jb-modal-open');
   var state = props.state || 'information';
   var type = props.type || 'alert';
   var addFooter = type !== 'notification';
@@ -2216,7 +2216,7 @@ var createModal = function createModal(props) {
     jackbox.classList.remove('jackbox--show');
     setTimeout(function () {
       documentBody.removeChild(jackbox);
-      documentBody.classList.remove('modal-open');
+      documentBody.classList.remove('jb-modal-open');
     }, 300);
   };
 
@@ -2229,7 +2229,7 @@ var createModal = function createModal(props) {
   content.className = "jb-modal__content";
   var icon = document.createElement('aside');
   icon.className = "jb-modal__icon";
-  icon.innerHTML = "<div class=\"box__outline\">\n      <i class=\"box__icon__image\">\n      !\n      </div>";
+  icon.innerHTML = "<div class=\"jb-modal__box__outline\">\n      <i class=\"jb-modal__box__icon__image\">\n      !\n      </div>";
   var footer = document.createElement('div');
 
   if (addFooter) {
@@ -2240,7 +2240,7 @@ var createModal = function createModal(props) {
     }
 
     var cancelButton = document.createElement('button');
-    cancelButton.className = "button button--cancel";
+    cancelButton.className = "jb-modal__button jb-modal__button--cancel";
     cancelButton.innerText = props.cancelButtonText;
 
     if (props.cancelCallback) {
@@ -2253,7 +2253,7 @@ var createModal = function createModal(props) {
       once: true
     });
     var cta = document.createElement('button');
-    cta.className = "button button--action";
+    cta.className = "jb-modal__button jb-modal__button--action";
     cta.innerHTML = props.ctaButtonText;
 
     if (cta.ctaCallback) {
