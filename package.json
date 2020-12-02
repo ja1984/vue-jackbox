@@ -1,7 +1,7 @@
 {
   "name": "vue-jackbox",
   "description": "A small vue plugin to display nice looking alerts",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "private": false,
   "main": "dist/vue-jackbox.common.js",
   "files": [
