@@ -452,6 +452,13 @@ module.exports = DESCRIPTORS ? Object.defineProperties : function defineProperti
 
 /***/ }),
 
+/***/ "3a62":
+/***/ (function(module, exports, __webpack_require__) {
+
+// extracted by mini-css-extract-plugin
+
+/***/ }),
+
 /***/ "4160":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -2339,7 +2346,11 @@ var createModal = function createModal(props) {
 };
 
 
+// EXTERNAL MODULE: ./src/styles.css
+var styles = __webpack_require__("3a62");
+
 // CONCATENATED MODULE: ./src/vue-jackbox.js
+
 
 
 var defaultProps = {

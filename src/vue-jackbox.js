@@ -1,4 +1,5 @@
 import { createModal } from './modal';
+import './styles.css'
 const defaultProps = {
   cancelOnBackdrop: false,
   cancelTimeout: -1,
