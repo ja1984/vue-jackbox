@@ -2,7 +2,7 @@ import { createModal } from './modal';
 import './styles.css'
 const defaultProps = {
   cancelOnBackdrop: false,
-  cancelTimeout: -1,
+  duration: -1,
   cancelOnEsc: true,
   inputLabel: '',
   inputPlaceholder: '',
@@ -56,7 +56,7 @@ const VueJackBox = {
       const documentBody = document.body;
       if (!documentBody) return;
 
-      const jackbox = createModal({ ...defaultProps, ...props, type: 'notification', cancelOnBackdrop: true, cancelTimeout: 35000, });
+      const jackbox = createModal({ ...defaultProps, ...props, type: 'notification', cancelOnBackdrop: true, duration: 3500, });
       documentBody.appendChild(jackbox);
 
       setTimeout(() => {

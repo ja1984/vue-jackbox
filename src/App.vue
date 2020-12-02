@@ -19,7 +19,7 @@ export default {
       this.$confirm(
         {
           title: 'Deactive account',
-          text: 'Are you sure you want to deactivate your acocunt? By doing this you will lose all of your saved data and will not be able to retrive it.',
+          message: 'Are you sure you want to deactivate your acocunt? By doing this you will lose all of your saved data and will not be able to retrive it.',
           cta: this.hej,
           state
         });
@@ -28,7 +28,7 @@ export default {
       this.$alert(
         {
           title: 'Deactive account',
-          text: 'Are you sure you want to deactivate your acocunt? By doing this you will lose all of your saved data and will not be able to retrive it.',
+          message: 'Are you sure you want to deactivate your acocunt? By doing this you will lose all of your saved data and will not be able to retrive it.',
           cta: this.hej,
           state
         });
@@ -37,7 +37,7 @@ export default {
       this.$notification(
         {
           title: 'Success! 😂',
-          text: 'We have succesfully added <strong>Acti ity 57</strong> to your acocunt!',
+          message: 'We have succesfully added <strong>Acti ity 57</strong> to your acocunt!',
           state: 'success'
         });
     },

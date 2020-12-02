@@ -13,6 +13,9 @@ const createModal = (props) => {
   const backdrop = document.createElement("div");
   backdrop.className = "jackbox__backdrop";
 
+  const inputWrapper = document.createElement('div');
+  const input = document.createElement('input');
+
   let closing = false;
   const close = () => {
     if (closing) return;
@@ -44,15 +47,15 @@ const createModal = (props) => {
   const footer = document.createElement('div');
   if (addFooter) {
     footer.className = "jb-modal__footer"
-    
-    if(props.centerButtons) {
+
+    if (props.centerButtons) {
       footer.className += ' jb-modal__footer--center'
     }
 
     const cancelButton = document.createElement('button')
     cancelButton.className = "jb-modal__button jb-modal__button--cancel";
     cancelButton.innerText = props.cancelButtonText
-    if(props.cancelCallback) {
+    if (props.cancelCallback) {
       cancelButton.addEventListener('click', props.cancelCallback, { once: true });
     }
     cancelButton.addEventListener('click', close, { once: true });
@@ -60,13 +63,19 @@ const createModal = (props) => {
     const cta = document.createElement('button')
     cta.className = "jb-modal__button jb-modal__button--action";
     cta.innerHTML = props.ctaButtonText
-    if(cta.ctaCallback) {
-      cta.addEventListener('click', props.ctaCallback, { once: true });
+    if (cta.ctaCallback) {
+      cta.addEventListener('click', () => {
+        if (type === 'prompt') {
+          props.ctaCallback(input.value);
+        } else {
+          props.ctaCallback();
+        }
+      }, { once: true });
     }
     cta.addEventListener('click', close, { once: true });
 
     if (addFooter) {
-      if(type !== 'alert') {
+      if (type !== 'alert') {
         footer.appendChild(cancelButton);
       }
       footer.appendChild(cta);
@@ -79,18 +88,18 @@ const createModal = (props) => {
   const text = document.createElement('div');
   text.className = "jb-modal__text";
 
-  title.innerText = props.title;
-  text.innerHTML = props.text;
+  title.innerHTML = props.title;
+  text.innerHTML = props.message;
 
   if (type === 'prompt') {
-    const inputWrapper = document.createElement('div');
+
     inputWrapper.className = 'jb-modal__input__wrapper';
-    const input = document.createElement('input');
+
     input.placeholder = props.inputPlaceholder;
     input.value = props.inputValue,
-    input.className = "jb-modal__input"
+      input.className = "jb-modal__input"
 
-    if(props.inputLabel.length > 0) {
+    if (props.inputLabel.length > 0) {
       const label = document.createElement("label");
       label.className = "jb-modal__input__label"
       const labelText = document.createElement("span");
@@ -102,7 +111,7 @@ const createModal = (props) => {
       inputWrapper.appendChild(input);
     }
 
-    
+
     text.appendChild(inputWrapper);
   }
 
@@ -132,10 +141,10 @@ const createModal = (props) => {
   jackbox.appendChild(backdrop);
   jackbox.appendChild(modal);
 
-  if (props.cancelTimeout > -1) {
+  if (props.duration > -1) {
     setTimeout(() => {
       close();
-    }, props.cancelTimeout);
+    }, props.duration);
   }
 
   if (props.cancelOnBackdrop) {
