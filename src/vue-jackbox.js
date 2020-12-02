@@ -1,26 +1,14 @@
-import { createModal } from './modal';
+import { createModal, getDefaultProps } from './modal';
 import './styles.css'
-const defaultProps = {
-  cancelOnBackdrop: false,
-  duration: -1,
-  cancelOnEsc: true,
-  inputLabel: '',
-  inputPlaceholder: '',
-  inputValue: '',
-  centerButtons: false,
-  cancelButtonText: 'Cancel',
-  ctaButtonText: 'Continue',
-  cancelCallback: null,
-  ctaCallback: null,
-}
+
 const VueJackBox = {
   install(Vue) {
-    Vue.prototype.$confirm = function (props) {
+    Vue.prototype.$confirm = function (userProps) {
       const documentBody = document.body;
       if (!documentBody) return;
 
-      const properties = { ...defaultProps, ...props, type: 'confirm' };
-      const jackbox = createModal(properties);
+      const properties = getDefaultProps(userProps, { });
+      const jackbox = createModal({...properties, type: 'confirm'});
       documentBody.appendChild(jackbox);
 
       setTimeout(() => {
@@ -28,11 +16,12 @@ const VueJackBox = {
       }, 10)
     }
 
-    Vue.prototype.$alert = function (props) {
+    Vue.prototype.$alert = function (userProps) {
       const documentBody = document.body;
       if (!documentBody) return;
 
-      const jackbox = createModal({ ...defaultProps, ...props, type: 'alert', centerButtons: true, });
+      const properties = getDefaultProps(userProps, { centerButtons: true, }, { ok: { text: 'OK' } });
+      const jackbox = createModal({...properties, type: 'alert'});
       documentBody.appendChild(jackbox);
 
       setTimeout(() => {
@@ -40,11 +29,13 @@ const VueJackBox = {
       }, 10)
     }
 
-    Vue.prototype.$prompt = function (props) {
+    Vue.prototype.$prompt = function (userProps) {
       const documentBody = document.body;
       if (!documentBody) return;
 
-      const jackbox = createModal({ ...defaultProps, ...props, type: 'prompt' });
+      const properties = getDefaultProps(userProps, { });
+      const jackbox = createModal({...properties, type: 'prompt'});
+
       documentBody.appendChild(jackbox);
 
       setTimeout(() => {
@@ -52,11 +43,13 @@ const VueJackBox = {
       }, 10)
     }
 
-    Vue.prototype.$notification = function (props) {
+    Vue.prototype.$notification = function (userProps) {
       const documentBody = document.body;
       if (!documentBody) return;
+      
+      const properties = getDefaultProps(userProps, {cancelOnBackdrop: true, duration: 2000 });
+      const jackbox = createModal({...properties, type: 'notification'});
 
-      const jackbox = createModal({ ...defaultProps, ...props, type: 'notification', cancelOnBackdrop: true, duration: 3500, });
       documentBody.appendChild(jackbox);
 
       setTimeout(() => {

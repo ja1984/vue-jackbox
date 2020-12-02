@@ -1,12 +1,15 @@
 <template>
   <div id="app">
-
-    <button @click="confirm('critical')">Critical</button>
-    <button @click="confirm('information')">Information</button>
-    <button @click="confirm('success')">Success</button>
-    <button @click="confirm('warning')">Warning</button>
-    <button @click="alert('warning')">Alert</button>
-    <button @click="done()">Donr</button>
+    {{ val }}
+    <button @click="confirm">Confirm</button>
+    <button @click="alert">Alert</button>
+    <button @click="notification">Notification</button>
+    <button @click="prompt">Prompt</button>
+    <select v-model="state">
+      <option v-for="stateValue in states" :key="stateValue" :value="stateValue">
+        {{ stateValue }}
+      </option>
+    </select>
   </div>
 </template>
 
@@ -14,31 +17,55 @@
 
 export default {
   name: 'App',
+  data() {
+    return {
+      val: '',
+      state: 'information',
+      states: ['critical', 'warning', 'information', 'success']
+    };
+  },
   methods: {
-    confirm(state) {
+    callback(value) {
+      this.val = value;
+    },
+    test() {
+      console.log('äTEst');
+    },
+    confirm() {
       this.$confirm(
         {
-          title: 'Deactive account',
-          message: 'Are you sure you want to deactivate your acocunt? By doing this you will lose all of your saved data and will not be able to retrive it.',
-          cta: this.hej,
-          state
+          title: 'Confirm',
+          message: 'This is a confirm',
+          state: this.state,
         });
     },
-    alert(state) {
+    alert() {
       this.$alert(
         {
-          title: 'Deactive account',
-          message: 'Are you sure you want to deactivate your acocunt? By doing this you will lose all of your saved data and will not be able to retrive it.',
-          cta: this.hej,
-          state
+          title: 'Alert',
+          message: 'This is an alert',
+          state: this.state,
         });
     },
-    done() {
+    notification() {
       this.$notification(
         {
-          title: 'Success! 😂',
-          message: 'We have succesfully added <strong>Acti ity 57</strong> to your acocunt!',
-          state: 'success'
+          title: 'Notification',
+          message: 'This is an notification',
+          state: this.state,
+        });
+    },
+    prompt() {
+      this.$prompt(
+        {
+          title: 'Prompt',
+          message: 'This is an prompt',
+          state: this.state,
+          ok: {
+            text: 'Confirm',
+            action: this.callback,
+          },
+          value: this.val
         });
     },
   }

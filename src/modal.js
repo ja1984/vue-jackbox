@@ -16,6 +16,12 @@ const createModal = (props) => {
   const inputWrapper = document.createElement('div');
   const input = document.createElement('input');
 
+  const cancelButton = document.createElement('button')
+  cancelButton.className = "jb-modal__button jb-modal__button--cancel";
+
+  const okButton = document.createElement('button')
+  okButton.className = "jb-modal__button jb-modal__button--action";
+
   let closing = false;
   const close = () => {
     if (closing) return;
@@ -52,33 +58,29 @@ const createModal = (props) => {
       footer.className += ' jb-modal__footer--center'
     }
 
-    const cancelButton = document.createElement('button')
-    cancelButton.className = "jb-modal__button jb-modal__button--cancel";
-    cancelButton.innerText = props.cancelButtonText
-    if (props.cancelCallback) {
-      cancelButton.addEventListener('click', props.cancelCallback, { once: true });
+    if (props.cancel) {
+      cancelButton.innerText = props.cancel.text
+      if (props.cancel.action) {
+        cancelButton.addEventListener('click', props.props.cancel.action, { once: true });
+      }
+      cancelButton.addEventListener('click', close, { once: true });
     }
-    cancelButton.addEventListener('click', close, { once: true });
 
-    const cta = document.createElement('button')
-    cta.className = "jb-modal__button jb-modal__button--action";
-    cta.innerHTML = props.ctaButtonText
-    if (cta.ctaCallback) {
-      cta.addEventListener('click', () => {
-        if (type === 'prompt') {
-          props.ctaCallback(input.value);
-        } else {
-          props.ctaCallback();
-        }
-      }, { once: true });
+    if (props.ok) {
+      okButton.innerHTML = props.ok.text
+      if (props.ok.action) {
+        okButton.addEventListener('click', type !== 'prompt' ? props.ok.action : () => {
+          props.ok.action(input.value);
+        }, { once: true });
+      }
+      okButton.addEventListener('click', close, { once: true });
     }
-    cta.addEventListener('click', close, { once: true });
 
     if (addFooter) {
       if (type !== 'alert') {
         footer.appendChild(cancelButton);
       }
-      footer.appendChild(cta);
+      footer.appendChild(okButton);
     }
   }
 
@@ -95,15 +97,15 @@ const createModal = (props) => {
 
     inputWrapper.className = 'jb-modal__input__wrapper';
 
-    input.placeholder = props.inputPlaceholder;
-    input.value = props.inputValue,
-      input.className = "jb-modal__input"
+    input.placeholder = props.placeholder;
+    input.value = props.value;
+    input.className = "jb-modal__input";
 
-    if (props.inputLabel.length > 0) {
+    if (props.label.length > 0) {
       const label = document.createElement("label");
       label.className = "jb-modal__input__label"
       const labelText = document.createElement("span");
-      labelText.innerText = props.inputLabel;
+      labelText.innerText = props.label;
       label.appendChild(labelText)
       label.appendChild(input);
       inputWrapper.appendChild(label);
@@ -154,6 +156,30 @@ const createModal = (props) => {
   return jackbox;
 };
 
+const globalProps = {
+  cancelOnBackdrop: false,
+  duration: -1,
+  cancelOnEsc: true,
+  label: '',
+  placeholder: '',
+  value: '',
+  centerButtons: false,
+  ctaCallback: null,
+  ok: {
+    text: 'Continue'
+  },
+  cancel: {
+    text: 'Cancel'
+  }
+}
 
+const getDefaultProps = (userProps, specificProps, globalOverrides) => {
+  const global = {...globalProps, ...globalOverrides}
+  console.log(global);
+  const ok = { ...global.ok, ...(userProps.ok || {}) };
+  const cancel = { ...globalProps.cancel, ...(userProps.cancel || {}) };
 
-export { createModal };
+  return { ...globalProps, ...specificProps, ...userProps, ok, cancel}
+}
+
+export { createModal, getDefaultProps };
