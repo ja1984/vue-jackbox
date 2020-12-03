@@ -3,80 +3,200 @@
 <title>vue-jackbox demo</title>
 
 <link rel="stylesheet" href="dist/vue-jackbox.css">
+<link rel="stylesheet" href="demo.css">
 
 <body>
+  <div class="top">
+    <div class="top__section"></div>
+    <div class="top__section"></div>
+    <div class="top__section"></div>
+    <div class="top__section"></div>
+  </div>
   <div id="app">
-    {{ val }}
-    <button @click="confirm">Confirm</button>
-    <button @click="alert">Alert</button>
-    <button @click="notification">Notification</button>
-    <button @click="prompt">Prompt</button>
-    <select v-model="state">
-      <option v-for="stateValue in states" :key="stateValue" :value="stateValue">
-        {{ stateValue }}
-      </option>
-    </select>
+
+    <div class="container">
+      <div class="row row--center-v">
+        <div class="column">
+          <h1>VueJackBox</h1>
+          <p>
+            VueJackBox is a plugin to display beautiful alerts in vue. <a href="https://github.com/ja1984/vue-jackbox" target="_blank">GitHub</a>.
+          </p>    
+        </div>
+        <div class="column">
+          <div class="text-right">
+          <p>
+            <strong>Popup state</strong>
+          </p>
+          <select v-model="state">
+            <option v-for="stateValue in states" :key="stateValue" :value="stateValue">
+              {{ stateValue }}
+            </option>
+          </select>
+          <p class="small">
+            This affects the styling on all alerts in this demo.
+          </p>
+        </div>
+        </div>
+      </div>
+      
+      <h2>
+        Confirm
+      </h2>
+      <div class="row">
+        <div class="column">
+          <section class="section">
+            <img src="screenshots/confirm.png" class="screenshot">
+          <section>
+            <button class="button" class="button" @click="confirm">Try me</button>
+          </section>
+        </section>
+        </div>
+        <div class="column">
+          <pre class="code">
+  this.$confirm({
+    title: 'Confirm',
+    message: 'This is a confirm',
+    state: '{{ state }}',
+  });</pre>
+        </div>
+      </div>
+      <h2>
+        Alert
+      </h2>
+      <div class="row">
+        <div class="column">
+          <section class="section">
+            <img src="screenshots/confirm.png" class="screenshot">
+          <section>
+            <button class="button" @click="alert">Try me</button>
+          </section>
+          </section>
+        </div>
+        <div class="column">
+  <pre class="code">
+    this.$prompt({
+      title: 'Prompt',
+      message: 'This is an prompt',
+      state: '{{ state }}',
+      ok: {
+        text: 'Confirm',
+        action: this.callback,
+      },
+      value: this.val
+    });</pre>
+        </div>
+      </div>
+      <h2>
+        Prompt
+      </h2>
+      <div class="row">
+        <div class="column">
+          
+          <section class="section">
+            <img src="screenshots/prompt.png" class="screenshot">
+          <section>
+            <button class="button" @click="prompt">Try me</button>
+          </section>
+          </section>
+        </div>
+        <div class="column">
+          <pre class="code">
+  this.$prompt({
+    title: 'Prompt',
+    message: 'This is an prompt',
+    state: '{{ state }}',
+    ok: {
+      text: 'Confirm',
+      action: (val) => { this.val = val; }),
+    },
+    value: this.val
+  });</pre>
+        </div>
+      </div>
+      <h2>
+        Notification
+      </h2>
+      <div class="row">
+        <div class="column">
+          <section class="section">
+          <img src="screenshots/notification.png" class="screenshot">
+          <section>
+            <button class="button" @click="notification">Try me</button>
+          </section>
+          </section>
+        </div>
+        <div class="column">
+  <pre class="code">
+    this.$notification({
+      title: 'Notification',
+      message: 'This is an notification',
+      state: '{{ state }}',
+    });</pre>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 <script src="https://unpkg.com/vue@2.4.2/dist/vue.min.js"></script>
-<script src="dist/vue-jackbox.umd.min.js"></script>
+<script src="dist/vue-jackbox.umd.js"></script>
 <script>
-(function() {
-  var app = new Vue({
-  el: '#app',
-  data() {
-    return {
-      val: '',
-      state: 'information',
-      states: ['critical', 'warning', 'information', 'success']
-    };
-  },
-  methods: {
-    callback(value) {
-      this.val = value;
-    },
-    test() {
-      console.log('äTEst');
-    },
-    confirm() {
-      this.$confirm(
-        {
-          title: 'Confirm',
-          message: 'This is a confirm',
-          state: this.state,
-        });
-    },
-    alert() {
-      this.$alert(
-        {
-          title: 'Alert',
-          message: 'This is an alert',
-          state: this.state,
-        });
-    },
-    notification() {
-      this.$notification(
-        {
-          title: 'Notification',
-          message: 'This is an notification',
-          state: this.state,
-        });
-    },
-    prompt() {
-      this.$prompt(
-        {
-          title: 'Prompt',
-          message: 'This is an prompt',
-          state: this.state,
-          ok: {
-            text: 'Confirm',
-            action: this.callback,
-          },
-          value: this.val
-        });
-    },
-  }
-})
-}());
+  (function () {
+    var app = new Vue({
+      el: '#app',
+      data() {
+        return {
+          val: '',
+          state: 'information',
+          states: ['critical', 'warning', 'information', 'success']
+        };
+      },
+      methods: {
+        callback(value) {
+          this.val = value;
+        },
+        test() {
+          console.log('äTEst');
+        },
+        confirm() {
+          this.$confirm(
+            {
+              title: 'Confirm',
+              message: 'This is a confirm',
+              state: this.state,
+            });
+        },
+        alert() {
+          this.$alert(
+            {
+              title: 'Alert',
+              message: 'This is an alert',
+              state: this.state,
+            });
+        },
+        notification() {
+          this.$notification(
+            {
+              title: 'Notification',
+              message: 'This is an notification',
+              state: this.state,
+            });
+        },
+        prompt() {
+          this.$prompt(
+            {
+              title: 'Prompt',
+              message: 'This is an prompt',
+              state: this.state,
+              ok: {
+                text: 'Confirm',
+                action: this.callback,
+              },
+              value: this.val
+            });
+        },
+      }
+    })
+  }());
 </script>
+
 </html>
