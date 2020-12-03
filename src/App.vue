@@ -5,6 +5,7 @@
     <button @click="alert">Alert</button>
     <button @click="notification">Notification</button>
     <button @click="prompt">Prompt</button>
+    <button @click="toast">Toast</button>
     <select v-model="state">
       <option v-for="stateValue in states" :key="stateValue" :value="stateValue">
         {{ stateValue }}
@@ -28,14 +29,12 @@ export default {
     callback(value) {
       this.val = value;
     },
-    test() {
-      console.log('äTEst');
-    },
     confirm() {
       this.$confirm(
         {
           title: 'Confirm',
           message: 'This is a confirm',
+          question: 'Heeey!?',
           state: this.state,
         });
     },
@@ -66,6 +65,14 @@ export default {
             action: this.callback,
           },
           value: this.val
+        });
+    },
+    toast() {
+      this.$toast(
+        {
+          title: 'Prompt',
+          message: 'This is an prompt',
+          state: 'warning',
         });
     },
   }

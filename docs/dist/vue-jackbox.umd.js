@@ -2214,7 +2214,7 @@ var createModal = function createModal(props) {
   documentBody.classList.add('jb-modal-open');
   var state = props.state || 'information';
   var type = props.type || 'alert';
-  var addFooter = type !== 'notification';
+  var addFooter = type !== 'notification' && type !== 'toast';
   var jackbox = document.createElement("div");
   jackbox.classList.add('jackbox');
   var backdrop = document.createElement("div");
@@ -2240,6 +2240,11 @@ var createModal = function createModal(props) {
   var modal = document.createElement('div');
   modal.className = "jb-modal";
   modal.className += " jb-modal--".concat(state);
+
+  if (type === 'toast') {
+    modal.className += " jb-modal--toast";
+  }
+
   var body = document.createElement('div');
   body.className = "jb-modal__body";
   var content = document.createElement('section');
@@ -2299,6 +2304,8 @@ var createModal = function createModal(props) {
   title.className = "jb-modal__title";
   var text = document.createElement('div');
   text.className = "jb-modal__text";
+  var question = document.createElement('div');
+  question.className = "jb-modal__question";
   title.innerHTML = props.title;
   text.innerHTML = props.message;
 
@@ -2338,6 +2345,12 @@ var createModal = function createModal(props) {
 
   content.appendChild(title);
   content.appendChild(text);
+
+  if (props.question) {
+    question.innerHTML = props.question;
+    content.appendChild(question);
+  }
+
   body.appendChild(icon);
   body.appendChild(content);
   modal.appendChild(body);
@@ -2346,7 +2359,10 @@ var createModal = function createModal(props) {
     modal.appendChild(footer);
   }
 
-  jackbox.appendChild(backdrop);
+  if (props.showBackdrop) {
+    jackbox.appendChild(backdrop);
+  }
+
   jackbox.appendChild(modal);
 
   if (props.duration > -1) {
@@ -2366,9 +2382,13 @@ var createModal = function createModal(props) {
 
 var globalProps = {
   cancelOnBackdrop: false,
+  showBackdrop: true,
   duration: -1,
   cancelOnEsc: true,
+  title: '',
+  message: '',
   label: '',
+  question: '',
   placeholder: '',
   value: '',
   centerButtons: false,
@@ -2478,6 +2498,26 @@ var VueJackBox = {
       });
       var jackbox = createModal(_objectSpread2(_objectSpread2({}, properties), {}, {
         type: 'notification'
+      }));
+      documentBody.appendChild(jackbox);
+      setTimeout(function () {
+        jackbox.classList.add('jackbox--show');
+      }, 10);
+    };
+
+    Vue.prototype.$toast = function (userProps) {
+      if (typeof userProps === 'undefined') {
+        console.warn('VueJackBox - You need to add at least some properties');
+        return;
+      }
+
+      var documentBody = document.body;
+      if (!documentBody) return;
+      var properties = modal_getDefaultProps(userProps, {
+        showBackdrop: false
+      });
+      var jackbox = createModal(_objectSpread2(_objectSpread2({}, properties), {}, {
+        type: 'toast'
       }));
       documentBody.appendChild(jackbox);
       setTimeout(function () {

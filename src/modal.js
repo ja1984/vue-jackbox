@@ -6,7 +6,7 @@ const createModal = (props) => {
 
   const state = props.state || 'information';
   const type = props.type || 'alert';
-  const addFooter = type !== 'notification';
+  const addFooter = type !== 'notification' && type !== 'toast';
 
   const jackbox = document.createElement("div")
   jackbox.classList.add('jackbox')
@@ -36,6 +36,10 @@ const createModal = (props) => {
   const modal = document.createElement('div');
   modal.className = "jb-modal"
   modal.className += ` jb-modal--${state}`
+
+  if(type === 'toast') {
+    modal.className += ` jb-modal--toast`
+  }
 
   const body = document.createElement('div');
   body.className = "jb-modal__body"
@@ -90,8 +94,12 @@ const createModal = (props) => {
   const text = document.createElement('div');
   text.className = "jb-modal__text";
 
+  const question = document.createElement('div');
+  question.className = "jb-modal__question";
+
   title.innerHTML = props.title;
   text.innerHTML = props.message;
+
 
   if (type === 'prompt') {
 
@@ -131,6 +139,12 @@ const createModal = (props) => {
 
   content.appendChild(title)
   content.appendChild(text);
+
+  if(props.question) {
+    question.innerHTML = props.question;
+    content.appendChild(question);
+  }
+
   body.appendChild(icon);
   body.appendChild(content);
   modal.appendChild(body);
@@ -139,8 +153,9 @@ const createModal = (props) => {
     modal.appendChild(footer);
   }
 
-
-  jackbox.appendChild(backdrop);
+  if(props.showBackdrop) {
+    jackbox.appendChild(backdrop);
+  }
   jackbox.appendChild(modal);
 
   if (props.duration > -1) {
@@ -158,9 +173,13 @@ const createModal = (props) => {
 
 const globalProps = {
   cancelOnBackdrop: false,
+  showBackdrop: true,
   duration: -1,
   cancelOnEsc: true,
+  title: '',
+  message: '',
   label: '',
+  question: '',
   placeholder: '',
   value: '',
   centerButtons: false,

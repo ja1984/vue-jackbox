@@ -72,6 +72,24 @@ const VueJackBox = {
         jackbox.classList.add('jackbox--show');
       }, 10)
     }
+
+    Vue.prototype.$toast = function (userProps) {
+      if(typeof userProps === 'undefined') {
+        console.warn('VueJackBox - You need to add at least some properties');
+        return;
+      }
+      const documentBody = document.body;
+      if (!documentBody) return;
+      
+      const properties = getDefaultProps(userProps, {showBackdrop: false,  });
+      const jackbox = createModal({...properties, type: 'toast', });
+
+      documentBody.appendChild(jackbox);
+
+      setTimeout(() => {
+        jackbox.classList.add('jackbox--show');
+      }, 10)
+    }
   }
 };
 
