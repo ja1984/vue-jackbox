@@ -4,8 +4,8 @@ const createModal = (props) => {
 
   documentBody.classList.add('jb-modal-open');
 
-  const state = props.state || 'information';
-  const type = props.type || 'alert';
+  const state = props.state;
+  const type = props.type;
   const addFooter = type !== 'notification' && type !== 'toast';
 
   const jackbox = document.createElement("div")
@@ -113,7 +113,7 @@ const createModal = (props) => {
       const label = document.createElement("label");
       label.className = "jb-modal__input__label"
       const labelText = document.createElement("span");
-      labelText.innerText = props.label;
+      labelText.innerHTML = props.label;
       label.appendChild(labelText)
       label.appendChild(input);
       inputWrapper.appendChild(label);
@@ -182,8 +182,9 @@ const globalProps = {
   question: '',
   placeholder: '',
   value: '',
+  state: 'information',
+  type: 'alert',
   centerButtons: false,
-  ctaCallback: null,
   ok: {
     text: 'Continue'
   },

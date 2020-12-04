@@ -2203,8 +2203,8 @@ var createModal = function createModal(props) {
   var documentBody = document.body;
   if (!documentBody) return;
   documentBody.classList.add('jb-modal-open');
-  var state = props.state || 'information';
-  var type = props.type || 'alert';
+  var state = props.state;
+  var type = props.type;
   var addFooter = type !== 'notification' && type !== 'toast';
   var jackbox = document.createElement("div");
   jackbox.classList.add('jackbox');
@@ -2310,7 +2310,7 @@ var createModal = function createModal(props) {
       var label = document.createElement("label");
       label.className = "jb-modal__input__label";
       var labelText = document.createElement("span");
-      labelText.innerText = props.label;
+      labelText.innerHTML = props.label;
       label.appendChild(labelText);
       label.appendChild(input);
       inputWrapper.appendChild(label);
@@ -2382,8 +2382,9 @@ var globalProps = {
   question: '',
   placeholder: '',
   value: '',
+  state: 'information',
+  type: 'alert',
   centerButtons: false,
-  ctaCallback: null,
   ok: {
     text: 'Continue'
   },
