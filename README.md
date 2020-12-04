@@ -12,6 +12,9 @@ $ npm install vue-jackbox
 $ yarn add vue-jackbox
 ```
 
+## Try it
+- [Demo](https://ja1984.github.io/vue-jackbox/)
+
 ## API
 
 Available methods inside a VueJS component
