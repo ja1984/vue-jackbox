@@ -73,7 +73,7 @@ const createDialog = (props) => {
 
   icon.innerHTML = `<div class="jb-dialog__box__outline">
       <i class="jb-dialog__box__icon__image">
-      !
+      ${props.icon}
       </div>`;
   const footer = document.createElement('div');
   if (addFooter) {
@@ -187,6 +187,7 @@ const globalProps = {
   hideIcon: false,
   showInput: false,
   showFooter: true,
+  icon: '!',
   ok: {
     text: 'Continue',
     className: 'jb-dialog__button--action',

@@ -14,9 +14,6 @@
     </select>
 
     <div>
-      <div class="preview">
-        <Dialog :options="options"></Dialog>
-      </div>
       <div>
         <label>
           <span class="label__text">Title</span>
@@ -59,13 +56,8 @@
 
 <script>
 
-import Dialog from './components/Dialog.vue';
-
 export default {
   name: 'App',
-  components: {
-    Dialog,
-  },
   data() {
     return {
       val: '',
@@ -118,6 +110,7 @@ export default {
           title: 'Alert',
           message: 'This is an alert',
           state: this.state,
+          icon: '<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-check" style="display: block; width: 16px; height: auto;"><polyline points="20 6 9 17 4 12"></polyline></svg>',
         },
       );
     },
