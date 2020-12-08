@@ -2201,6 +2201,7 @@ function _objectSpread2(target) {
 
 
 
+
 var createButton = function createButton(props, buttonName, input, close) {
   var buttonProps = props[buttonName];
 
@@ -2293,30 +2294,7 @@ var createDialog = function createDialog(props) {
       if (button) {
         footer.appendChild(button);
       }
-    }); // const cancelButton = document.createElement('button');
-    // cancelButton.className = 'jb-dialog__button jb-dialog__button--cancel';
-    // const okButton = document.createElement('button');
-    // okButton.className = 'jb-dialog__button jb-dialog__button--action';
-    // if (props.cancel) {
-    //   cancelButton.innerText = props.cancel.text;
-    //   if (props.cancel.action) {
-    //     cancelButton.addEventListener('click', props.props.cancel.action, { once: true });
-    //   }
-    //   cancelButton.addEventListener('click', close, { once: true });
-    // }
-    // if (props.ok) {
-    //   okButton.innerHTML = props.ok.text;
-    //   if (props.ok.action) {
-    //     okButton.addEventListener('click', type !== 'prompt' ? props.ok.action : () => {
-    //       props.ok.action(input.value);
-    //     }, { once: true });
-    //   }
-    //   okButton.addEventListener('click', close, { once: true });
-    // }
-    // if (type !== 'alert') {
-    //   footer.appendChild(cancelButton);
-    // }
-    // footer.appendChild(okButton);
+    });
   }
 
   var title = document.createElement('div');
@@ -2432,14 +2410,19 @@ var globalProps = {
 var dialog_getDefaultProps = function getDefaultProps(userProps, dialogProps) {
   var global = _objectSpread2({}, globalProps);
 
-  var ok = _objectSpread2(_objectSpread2(_objectSpread2({}, global.ok), dialogProps.ok || {}), userProps.ok || {});
+  var returnObject = _objectSpread2(_objectSpread2(_objectSpread2({}, globalProps), dialogProps), userProps);
 
-  var cancel = _objectSpread2(_objectSpread2(_objectSpread2({}, global.cancel), dialogProps.cancel || {}), userProps.cancel || {});
+  var buttons = userProps.buttons || dialogProps.buttons || global.buttons;
+  buttons.forEach(function (button) {
+    var buttonProps = _objectSpread2(_objectSpread2(_objectSpread2({}, global[button]), dialogProps[button] || {}), userProps[button] || {});
 
-  return _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, globalProps), dialogProps), userProps), {}, {
-    ok: ok,
-    cancel: cancel
+    if (Object.keys(buttonProps).length === 0) {
+      console.warn("VueJackBox - Missing properties for button: ".concat(button));
+    }
+
+    returnObject[button] = buttonProps;
   });
+  return returnObject;
 };
 
 

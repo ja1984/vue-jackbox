@@ -127,9 +127,10 @@ export default {
           title: 'Alert222',
           message: 'This is an alert',
           state: this.state,
-          test: { text: 'YESGA!' },
-          ok: { text: ' NOT OK!' },
-          buttons: ['ok', 'cancel', 'test'],
+          // test: { text: 'YESGA!', action: () => { alert('te'); } },
+          retry: { text: 'Retry', className: 'jb-dialog__button--action', action: () => { this.doRetry(); } },
+          buttons: ['cancel', 'retry', 'ok'],
+
         },
       );
     },

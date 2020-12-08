@@ -37,8 +37,19 @@ duration | `number` | -1 | The duration for which the alert will be shown, `-1 =
 ok | `object` | _{text: 'Continue', action: null}_ | Text and callback on ok button.
 cancel | `object` | _{text: 'Cancel', action: null}_ | Text and callback on cancel button.
 state | `string` | _information_ | Sets color on dialog, options: `information`, `critical`, `warning` ,`success`
+buttons | `string[]` | _['cancel', 'ok']_ | Select which buttons to show, you can add a custom button, but you will also need to add property for that.
 
 
+
+## Adding custom buttons
+```javascript
+this.$alert({
+  title: 'This is an test alert',
+  message: 'I´m just testing',
+  retry: { text: 'Retry', className: 'jb-dialog__button--action', action: () => { this.doRetry(); } },
+  buttons: ['cancel', 'retry', 'ok'],
+})
+```
 
 If any of the values is not present on the method call then the default values will be used.
 

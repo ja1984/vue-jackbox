@@ -88,35 +88,6 @@ const createDialog = (props) => {
         footer.appendChild(button);
       }
     });
-
-    // const cancelButton = document.createElement('button');
-    // cancelButton.className = 'jb-dialog__button jb-dialog__button--cancel';
-
-    // const okButton = document.createElement('button');
-    // okButton.className = 'jb-dialog__button jb-dialog__button--action';
-
-    // if (props.cancel) {
-    //   cancelButton.innerText = props.cancel.text;
-    //   if (props.cancel.action) {
-    //     cancelButton.addEventListener('click', props.props.cancel.action, { once: true });
-    //   }
-    //   cancelButton.addEventListener('click', close, { once: true });
-    // }
-
-    // if (props.ok) {
-    //   okButton.innerHTML = props.ok.text;
-    //   if (props.ok.action) {
-    //     okButton.addEventListener('click', type !== 'prompt' ? props.ok.action : () => {
-    //       props.ok.action(input.value);
-    //     }, { once: true });
-    //   }
-    //   okButton.addEventListener('click', close, { once: true });
-    // }
-
-    // if (type !== 'alert') {
-    //   footer.appendChild(cancelButton);
-    // }
-    // footer.appendChild(okButton);
   }
 
   const title = document.createElement('div');
@@ -228,12 +199,22 @@ const globalProps = {
 
 const getDefaultProps = (userProps, dialogProps) => {
   const global = { ...globalProps };
-  const ok = { ...global.ok, ...(dialogProps.ok || {}), ...(userProps.ok || {}) };
-  const cancel = { ...global.cancel, ...(dialogProps.cancel || {}), ...(userProps.cancel || {}) };
 
-  return {
-    ...globalProps, ...dialogProps, ...userProps, ok, cancel,
+  const returnObject = {
+    ...globalProps, ...dialogProps, ...userProps,
   };
+
+  const buttons = userProps.buttons || dialogProps.buttons || global.buttons;
+
+  buttons.forEach((button) => {
+    const buttonProps = { ...global[button], ...(dialogProps[button] || {}), ...(userProps[button] || {}) };
+    if (Object.keys(buttonProps).length === 0) {
+      console.warn(`VueJackBox - Missing properties for button: ${button}`);
+    }
+    returnObject[button] = buttonProps;
+  });
+
+  return returnObject;
 };
 
 export { createDialog, getDefaultProps };
