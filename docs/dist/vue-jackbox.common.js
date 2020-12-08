@@ -2278,7 +2278,7 @@ var createDialog = function createDialog(props) {
   content.className = 'jb-dialog__content';
   var icon = document.createElement('aside');
   icon.className = 'jb-dialog__icon';
-  icon.innerHTML = "<div class=\"jb-dialog__box__outline\">\n      <i class=\"jb-dialog__box__icon__image\">\n      !\n      </div>";
+  icon.innerHTML = "<div class=\"jb-dialog__box__outline\">\n      <i class=\"jb-dialog__box__icon__image\">\n      ".concat(props.icon, "\n      </div>");
   var footer = document.createElement('div');
 
   if (addFooter) {
@@ -2397,6 +2397,7 @@ var globalProps = {
   hideIcon: false,
   showInput: false,
   showFooter: true,
+  icon: '!',
   ok: {
     text: 'Continue',
     className: 'jb-dialog__button--action'
