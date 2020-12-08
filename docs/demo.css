@@ -385,6 +385,10 @@ h2 {
   padding: 10px;
 }
 
+.column--large {
+  flex: 2;
+}
+
 .code {
   color: #e6ecf1;
   display: block;
@@ -454,11 +458,65 @@ select {
 }
 
 .top__section:nth-child(1) {
-  background: #ffb300;
+  background: #fae6aa;
 }.top__section:nth-child(2) {
   background: #c44545;
 }.top__section:nth-child(3) {
   background: #2196f3;
 }.top__section:nth-child(4) {
   background: #8bc34a;
+}
+
+.label__text {
+  display: block;
+  font-weight: 600;
+  font-size: 12px;
+  margin-bottom: 5px;
+}
+
+.form-row {margin-bottom: 10px;}
+
+.form-row input[type=text] {
+  display: block;
+  width: 100%;
+  padding: 7px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  outline: none;
+}
+
+.demo {
+  position: absolute !important;
+}
+
+.demo .jb-dialog {
+  position: absolute !important;
+  transition: none !important;
+}
+
+.preview {
+  background: #fff;
+  width: 100%;
+  height: 400px;
+  position: relative;
+}
+
+.toggle-buttons {
+  margin-bottom: 25px;
+}
+
+.toggle-button {
+  border: none;
+  border-bottom: 2px solid rgba(0,0,0, .1);
+  padding: 10px;
+  background: transparent;
+  min-width: 150px;
+  text-align: left;
+  outline: none;
+  cursor: pointer;
+
+}
+
+.toggle-button--active {
+  border-color: #2196f3;
 }

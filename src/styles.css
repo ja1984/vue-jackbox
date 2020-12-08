@@ -6,11 +6,16 @@
   right: 0;
 }
 
+
+.jackbox--no-backdrop {
+  bottom: inherit;
+}
+
 .jackbox * {
   box-sizing: border-box;
 }
 
-.jb-modal {
+.jb-dialog {
   padding: 30px 40px;
   width: 90%;
   max-width: 475px;
@@ -28,41 +33,41 @@
   border-top: 4px solid var(--color-border);
 }
 
-.jb-modal--toast {
+.jb-dialog--toast {
   box-shadow: none;
   border: 4px solid var(--color-border);
   border-radius: 10px;
 }
 
-.jb-modal--toast .jb-modal__body {
+.jb-dialog--toast .jb-dialog__body {
   padding: 15px 10px;
   align-items: center;
 }
 
-.jb-modal--toast .jb-modal__title {
+.jb-dialog--toast .jb-dialog__title {
   margin: 0;
 }
 
-.jb-modal--toast .jb-modal__text {
+.jb-dialog--toast .jb-dialog__text {
   line-height: 1.2;
 }
 
-/* .jb-modal--warning {
+/* .jb-dialog--warning {
   background: #fffcf4;
   border: 4px solid #fae6aa;
   border-radius: 10px;
 } */
 
-.jb-modal--warning {
-  --color-action-button-background: #fff3e0;
-  --color-action-button-text: #ffb300;
-  --color-border: #ffb300;
-  --color-icon: #ffb300;
-  --color-icon-border: #ffb300;
-  --color-icon-outline: #fff3e0;
+.jb-dialog--warning {
+  --color-action-button-background: #fae39f;
+  --color-action-button-text: #92742c;
+  --color-border: #fae6aa;
+  --color-icon: #8c6d20;
+  --color-icon-border: #f4ca64;
+  --color-icon-outline: #fae39f;
 }
 
-.jb-modal--toast.jb-modal--warning {
+.jb-dialog--toast.jb-dialog--warning {
   --color-action-button-background: #fff3e0;
   --color-action-button-text: #ffb300;
   --color-border: #fae6aa;
@@ -74,7 +79,7 @@
   --color-title: #5c4912;
 }
 
-.jb-modal--critical {
+.jb-dialog--critical {
   --color-action-button-background: #fce8e8;
   --color-action-button-text: #c44545;
   --color-border: #dc3131;
@@ -83,7 +88,7 @@
   --color-icon-outline: #fce8e8;
 }
 
-.jb-modal--information {
+.jb-dialog--information {
   --color-action-button-background: #e1f5fe;
   --color-action-button-text: #2196f3;
   --color-border: #2196f3;
@@ -92,7 +97,19 @@
   --color-icon-outline: #e1f5fe;
 }
 
-.jb-modal--success {
+.jb-dialog--toast.jb-dialog--information {
+  --color-action-button-background: #e1f5fe;
+  --color-action-button-text: #2196f3;
+  --color-border: #2196f3;
+  --color-icon: #2196f3;
+  --color-icon-border: #2196f3;
+  --color-icon-outline: #d8edfe;
+  --color-background: #f4f7f9;
+  --color-text: #92742c;
+  --color-title: #5c4912;
+}
+
+.jb-dialog--success {
   --color-action-button-background: #e8f5e9;
   --color-action-button-text: #8bc34a;
   --color-border: #8bc34a;
@@ -101,19 +118,19 @@
   --color-icon-outline: #e8f5e9;
 }
 
-.jb-modal__title {
+.jb-dialog__title {
   color: var(--color-title, #55585d);
   font-weight: 700;
   margin: 5px 0 10px;
   line-height: 25px;
 }
 
-.jb-modal__text {
+.jb-dialog__text {
   color: var(--color-title, #71777d);
   line-height: 1.5;
 }
 
-.jb-modal__question {
+.jb-dialog__question {
   color: var(--color-title, #55585d);
   margin-top: 15px;
   display:block;
@@ -121,36 +138,36 @@
   font-size: 14px
 }
 
-.jb-modal__body {
+.jb-dialog__body {
   flex: 1;
   padding: 25px 20px;
   display: flex;
 }
 
-.jb-modal__icon {
+.jb-dialog__icon {
   margin-right: 15px;
 }
 
-.jb-modal__content {
+.jb-dialog__content {
   flex: 1;
 }
 
-.jb-modal__footer {
+.jb-dialog__footer {
   background: #f8f9fa;
   padding: 15px 10px;
   display: flex;
   justify-content: flex-end;
 }
 
-.jb-modal__footer--center {
+.jb-dialog__footer--center {
   justify-content: center;
 }
 
-.jb-modal__footer--center .button {
+.jb-dialog__footer--center .button {
   margin: 0;
 }
 
-/* .jb-modal--show {
+/* .jb-dialog--show {
   transform: translate(-50%, 0);
 } */
 
@@ -173,39 +190,36 @@
   transition: all ease 0.3s;
 }
 
-.jackbox .jb-modal {
+.jackbox .jb-dialog {
   transition: all ease 0.3s;
 }
-.jackbox--show .jb-modal {
+.jackbox--show .jb-dialog {
   transform: translate(-50%, 40px);
   transition: all ease 0.3s 0.2s;
 }
 
-.jb-modal__button {
+.jb-dialog__button {
   font-weight: 700;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   outline: none;
   margin: 0 10px;
+  background: transparent;
+  color: #9ea1a5;
 }
 
-.jb-modal__button--action {
+.jb-dialog__button--action {
   background: var(--color-action-button-background);
   color: var(--color-action-button-text);
   padding: 10px 20px;
 }
 
-.jb-modal__button--cancel {
-  background: transparent;
-  color: #9ea1a5;
-}
-
-.jb-modal__box__icon {
+.jb-dialog__box__icon {
   margin-right: 12px;
 }
 
-.jb-modal__box__icon__image {
+.jb-dialog__box__icon__image {
   width: 25px;
   height: 25px;
   background: #fff;
@@ -223,17 +237,17 @@
   font-size: 14px;
 }
 
-.jb-modal__box__outline {
+.jb-dialog__box__outline {
   background: var(--color-icon-outline);
   border-radius: 50%;
   padding: 7px;
 }
 
-.jb-modal__input__wrapper {
+.jb-dialog__input__wrapper {
   margin-top: 15px;
 }
 
-.jb-modal__input {
+.jb-dialog__input {
   width: 100%;
   padding: 7px;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
@@ -244,19 +258,19 @@
   transition: all ease 0.3s;
 }
 
-.jb-modal__input:hover {
+.jb-dialog__input:hover {
   border: 1px solid #ccc;
 }
 
-.jb-modal__input:focus {
+.jb-dialog__input:focus {
   border: 1px solid #666;
 }
 
-.jb-modal__input__label {
+.jb-dialog__input__label {
   font-size: 12px;
   font-weight: 700;
 }
 
-.jb-modal-open {
+.jb-dialog-open {
   overflow: hidden;
 }

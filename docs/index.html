@@ -20,25 +20,141 @@
           <h1>VueJackBox</h1>
           <p>
             VueJackBox is a plugin to display beautiful alerts in vue. <a href="https://github.com/ja1984/vue-jackbox" target="_blank">GitHub</a>.
-          </p>    
+          </p>
         </div>
         <div class="column">
           <div class="text-right">
-          <p>
-            <strong>Popup state</strong>
-          </p>
-          <select v-model="state">
-            <option v-for="stateValue in states" :key="stateValue" :value="stateValue">
-              {{ stateValue }}
-            </option>
-          </select>
-          <p class="small">
-            This affects the styling on all alerts in this demo.
-          </p>
-        </div>
+            <p>
+              <strong>Popup state</strong>
+            </p>
+            <select v-model="state">
+              <option v-for="stateValue in states" :key="stateValue" :value="stateValue">
+                {{ stateValue }}
+              </option>
+            </select>
+            <p class="small">
+              This affects the styling on all alerts in this demo.
+            </p>
+          </div>
         </div>
       </div>
-      
+
+      <h2>
+        Builder
+      </h2>
+      <div class="row">
+        <div class="column column--large">
+          <section class="section">
+            <div class="preview">
+              <div class="jackbox demo jackbox--show">
+                <div class="jackbox__backdrop"></div>
+                <div class="jb-dialog" :class="style">
+                  <div class="jb-dialog__body">
+                    <aside class="jb-dialog__icon" v-if="showIcon">
+                      <div class="jb-dialog__box__outline">
+                        <i class="jb-dialog__box__icon__image"> ! </i>
+                      </div>
+                    </aside>
+                    <section class="jb-dialog__content">
+                      <div class="jb-dialog__title">{{ title }}</div>
+                      <div class="jb-dialog__text">
+                        {{ message }}
+                        <div class="jb-dialog__input__wrapper" v-if="showInput">
+                          <template v-if="label.length > 0">
+                            <label class="jb-dialog__input__label"><span>{{ label }}</span>
+                              <input class="jb-dialog__input" :placeholder="placeholder" />
+                            </label>
+                          </template>
+                          <template v-else>
+                            <input class="jb-dialog__input" :placeholder="placeholder" />
+                          </template>
+                        </div>
+                      </div>
+                      <div class="jb-dialog__question">{{ question }}</div>
+                    </section>
+                  </div>
+                  <div class="jb-dialog__footer" :class="{'jb-dialog__footer--center': centerButtons}">
+                    <button class="jb-dialog__button jb-dialog__button--cancel">
+                      {{ cancel }}
+                    </button>
+                    <button class="jb-dialog__button jb-dialog__button--action">
+                      {{ ok }}
+                    </button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="column">
+          <div class="toggle-buttons">
+            <button @click="showBuilder = true" class="toggle-button" :class="{'toggle-button--active' : showBuilder === true}">Builder</button>
+            <button @click="showBuilder = false" class="toggle-button" :class="{'toggle-button--active' : showBuilder !== true}">Code</button>
+          </div>
+          <div v-if="showBuilder">
+            <div class="form-row">
+              <label>
+                <span class="label__text">Title</span>
+                <input type="text" v-model="title">
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                <span class="label__text">Message</span>
+                <input type="text" v-model="message">
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                <span class="label__text">Question</span>
+                <input type="text" v-model="question">
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                <span class="label__text">Ok button</span>
+                <input type="text" v-model="ok">
+              </label>
+            </div>
+            <div class="form-row">
+              <label>
+                <span class="label__text">Cancel button</span>
+                <input type="text" v-model="cancel">
+              </label>
+            </div>
+            <div class="form-row">
+              <label><input type="checkbox" v-model="showInput"> Show input</label>
+            </div>
+            <template v-if="showInput">
+              <div class="form-row">
+                <label>
+                  <span class="label__text">Placeholder</span>
+                  <input type="text" v-model="placeholder">
+                </label>
+              </div>
+              <div class="form-row">
+                <label>
+                  <span class="label__text">Label</span>
+                  <input type="text" v-model="label">
+                </label>
+              </div>
+            </template>
+            <div class="form-row">
+              <label><input type="checkbox" v-model="showIcon"> Show icon</label>
+            </div>
+
+            <div class="form-row">
+              <label><input type="checkbox" v-model="centerButtons"> Center buttons</label>
+            </div>
+
+            <button @click="testCustom">Try it</button>
+          </div>
+          <div v-else>
+            <pre class="code">this.$dialog({{ code }})</pre>
+          </div>
+        </div>
+      </div>
+
       <h2>
         Confirm
       </h2>
@@ -46,10 +162,10 @@
         <div class="column">
           <section class="section">
             <img src="screenshots/confirm.png" class="screenshot">
-          <section>
-            <button class="button" class="button" @click="confirm">Try me</button>
+            <section>
+              <button class="button" class="button" @click="confirm">Try me</button>
+            </section>
           </section>
-        </section>
         </div>
         <div class="column">
           <pre class="code">
@@ -67,13 +183,13 @@
         <div class="column">
           <section class="section">
             <img src="screenshots/confirm.png" class="screenshot">
-          <section>
-            <button class="button" @click="alert">Try me</button>
-          </section>
+            <section>
+              <button class="button" @click="alert">Try me</button>
+            </section>
           </section>
         </div>
         <div class="column">
-  <pre class="code">
+          <pre class="code">
     this.$prompt({
       title: 'Prompt',
       message: 'This is an prompt',
@@ -91,12 +207,12 @@
       </h2>
       <div class="row">
         <div class="column">
-          
+
           <section class="section">
             <img src="screenshots/prompt.png" class="screenshot">
-          <section>
-            <button class="button" @click="prompt">Try me</button>
-          </section>
+            <section>
+              <button class="button" @click="prompt">Try me</button>
+            </section>
           </section>
         </div>
         <div class="column">
@@ -119,14 +235,14 @@
       <div class="row">
         <div class="column">
           <section class="section">
-          <img src="screenshots/notification.png" class="screenshot">
-          <section>
-            <button class="button" @click="notification">Try me</button>
-          </section>
+            <img src="screenshots/notification.png" class="screenshot">
+            <section>
+              <button class="button" @click="notification">Try me</button>
+            </section>
           </section>
         </div>
         <div class="column">
-  <pre class="code">
+          <pre class="code">
     this.$notification({
       title: 'Notification',
       message: 'This is an notification',
@@ -147,12 +263,59 @@
         return {
           val: '',
           state: 'information',
-          states: ['critical', 'warning', 'information', 'success']
+          states: ['critical', 'warning', 'information', 'success'],
+          title: 'Title',
+          message: 'Message',
+          question: 'Question',
+          placeholder: '',
+          label: '',
+          showIcon: true,
+          ok: 'Continue',
+          cancel: 'Cancel',
+          state: 'information',
+          showInput: false,
+          centerButtons: false,
+          showBuilder: true,
         };
+      },
+      computed: {
+        style() {
+          return `jb-dialog--${this.state}`;
+        },
+        code() {
+          return {
+            state: this.state,
+            title: this.title,
+            message: this.message,
+            question: this.question,
+            ok: { text: this.ok },
+            cancel: { text: this.cancel },
+            label: this.label,
+            placeholder: this.placeholder,
+            hideIcon: !this.showIcon,
+            showInput: this.showInput,
+            centerButtons: this.centerButtons,
+          }
+        },
       },
       methods: {
         callback(value) {
           this.val = value;
+        },
+        testCustom() {
+          this.$dialog({
+            state: this.state,
+            title: this.title,
+            message: this.message,
+            question: this.question,
+            ok: { text: this.ok },
+            cancel: { text: this.cancel },
+            label: this.label,
+            placeholder: this.placeholder,
+            hideIcon: !this.showIcon,
+            showInput: this.showInput,
+            centerButtons: this.centerButtons,
+          });
         },
         confirm() {
           this.$confirm(

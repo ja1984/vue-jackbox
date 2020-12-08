@@ -1,96 +1,45 @@
-import { createModal, getDefaultProps } from './modal';
-import './styles.css'
+/* eslint-disable */
+import { createDialog, getDefaultProps } from './dialog';
+import './styles.css';
 
 const VueJackBox = {
   install(Vue) {
-    Vue.prototype.$confirm = function (userProps) {
-      if(typeof userProps === 'undefined') {
+    Vue.prototype.$dialog = function (userProps, dialogProps) {
+      if (typeof userProps === 'undefined') {
         console.warn('VueJackBox - You need to add at least some properties');
         return;
       }
       const documentBody = document.body;
       if (!documentBody) return;
 
-      const properties = getDefaultProps(userProps, { });
-      const jackbox = createModal({...properties, type: 'confirm'});
+      const properties = getDefaultProps(userProps, (dialogProps || {}));
+      const jackbox = createDialog({ ...properties });
       documentBody.appendChild(jackbox);
 
       setTimeout(() => {
         jackbox.classList.add('jackbox--show');
-      }, 10)
-    }
+      }, 10);
+    };
+    Vue.prototype.$confirm = function (userProps) {
+      this.$dialog(userProps, { ok: { text: 'Confirm', }, type: 'confirm' });
+    };
 
     Vue.prototype.$alert = function (userProps) {
-      if(typeof userProps === 'undefined') {
-        console.warn('VueJackBox - You need to add at least some properties');
-        return;
-      }
-      const documentBody = document.body;
-      if (!documentBody) return;
-
-      const properties = getDefaultProps(userProps, { centerButtons: true, }, { ok: { text: 'OK' } });
-      const jackbox = createModal({...properties, type: 'alert'});
-      documentBody.appendChild(jackbox);
-
-      setTimeout(() => {
-        jackbox.classList.add('jackbox--show');
-      }, 10)
-    }
+      this.$dialog(userProps, { centerButtons: true, ok: { text: 'OK' }, buttons: ['ok'], type: 'alert' });
+    };
 
     Vue.prototype.$prompt = function (userProps) {
-      if(typeof userProps === 'undefined') {
-        console.warn('VueJackBox - You need to add at least some properties');
-        return;
-      }
-      const documentBody = document.body;
-      if (!documentBody) return;
-
-      const properties = getDefaultProps(userProps, { });
-      const jackbox = createModal({...properties, type: 'prompt'});
-
-      documentBody.appendChild(jackbox);
-
-      setTimeout(() => {
-        jackbox.classList.add('jackbox--show');
-      }, 10)
-    }
+      this.$dialog(userProps, { showInput: true, type: 'prompt' });
+    };
 
     Vue.prototype.$notification = function (userProps) {
-      if(typeof userProps === 'undefined') {
-        console.warn('VueJackBox - You need to add at least some properties');
-        return;
-      }
-      const documentBody = document.body;
-      if (!documentBody) return;
-      
-      const properties = getDefaultProps(userProps, {cancelOnBackdrop: true, duration: 2000 });
-      const jackbox = createModal({...properties, type: 'notification'});
-
-      documentBody.appendChild(jackbox);
-
-      setTimeout(() => {
-        jackbox.classList.add('jackbox--show');
-      }, 10)
-    }
+      this.$dialog(userProps, { cancelOnBackdrop: true, duration: 2000, showFooter: false, type: 'notification' });
+    };
 
     Vue.prototype.$toast = function (userProps) {
-      if(typeof userProps === 'undefined') {
-        console.warn('VueJackBox - You need to add at least some properties');
-        return;
-      }
-      const documentBody = document.body;
-      if (!documentBody) return;
-      
-      const properties = getDefaultProps(userProps, {showBackdrop: false,  });
-      const jackbox = createModal({...properties, type: 'toast', });
-
-      documentBody.appendChild(jackbox);
-
-      setTimeout(() => {
-        jackbox.classList.add('jackbox--show');
-      }, 10)
-    }
-  }
+      this.$dialog(userProps, { showBackdrop: false, showFooter: false, type: 'toast' });
+    };
+  },
 };
 
 // Automatic installation if Vue has been added to the global scope.

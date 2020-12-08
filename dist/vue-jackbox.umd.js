@@ -2205,120 +2205,148 @@ function _objectSpread2(target) {
 
   return target;
 }
-// CONCATENATED MODULE: ./src/modal.js
+// CONCATENATED MODULE: ./src/dialog.js
 
 
-var createModal = function createModal(props) {
+
+
+var createButton = function createButton(props, buttonName, input, close) {
+  var buttonProps = props[buttonName];
+
+  if (!buttonProps) {
+    console.warn("VueJackBox - No button props found for button ".concat(buttonName));
+    return null;
+  }
+
+  var button = document.createElement('button');
+  button.classList.add('jb-dialog__button');
+
+  if (buttonProps.className) {
+    button.classList.add(buttonProps.className);
+  }
+
+  button.innerHTML = buttonProps.text;
+
+  if (buttonProps.action) {
+    button.addEventListener('click', !props.showInput ? buttonProps.action : function () {
+      buttonProps.action(input.value);
+    }, {
+      once: true
+    });
+  }
+
+  button.addEventListener('click', close, {
+    once: true
+  });
+  return button;
+};
+
+var createDialog = function createDialog(props) {
   var documentBody = document.body;
   if (!documentBody) return;
-  documentBody.classList.add('jb-modal-open');
+  documentBody.classList.add('jb-dialog-open');
   var state = props.state;
   var type = props.type;
-  var addFooter = type !== 'notification' && type !== 'toast';
-  var jackbox = document.createElement("div");
+  var addFooter = props.showFooter;
+  var jackbox = document.createElement('div');
   jackbox.classList.add('jackbox');
-  var backdrop = document.createElement("div");
-  backdrop.className = "jackbox__backdrop";
+
+  if (!props.showBackdrop) {
+    jackbox.classList.add('jackbox--no-backdrop');
+  }
+
+  var backdrop = document.createElement('div');
+  backdrop.className = 'jackbox__backdrop';
   var inputWrapper = document.createElement('div');
   var input = document.createElement('input');
-  var cancelButton = document.createElement('button');
-  cancelButton.className = "jb-modal__button jb-modal__button--cancel";
-  var okButton = document.createElement('button');
-  okButton.className = "jb-modal__button jb-modal__button--action";
   var closing = false;
 
   var close = function close() {
-    if (closing) return;
-    closing = true;
-    jackbox.classList.remove('jackbox--show');
-    setTimeout(function () {
-      documentBody.removeChild(jackbox);
-      documentBody.classList.remove('jb-modal-open');
-    }, 300);
+    if (!closing) {
+      closing = true;
+      jackbox.classList.remove('jackbox--show');
+      setTimeout(function () {
+        documentBody.removeChild(jackbox);
+        documentBody.classList.remove('jb-dialog-open');
+      }, 300);
+    }
   };
 
-  var modal = document.createElement('div');
-  modal.className = "jb-modal";
-  modal.className += " jb-modal--".concat(state);
+  var dialog = document.createElement('div');
+  dialog.className = 'jb-dialog';
+  dialog.className += " jb-dialog--".concat(state);
 
   if (type === 'toast') {
-    modal.className += " jb-modal--toast";
+    dialog.className += ' jb-dialog--toast';
   }
 
   var body = document.createElement('div');
-  body.className = "jb-modal__body";
+  body.className = 'jb-dialog__body';
   var content = document.createElement('section');
-  content.className = "jb-modal__content";
+  content.className = 'jb-dialog__content';
   var icon = document.createElement('aside');
-  icon.className = "jb-modal__icon";
-  icon.innerHTML = "<div class=\"jb-modal__box__outline\">\n      <i class=\"jb-modal__box__icon__image\">\n      !\n      </div>";
+  icon.className = 'jb-dialog__icon';
+  icon.innerHTML = "<div class=\"jb-dialog__box__outline\">\n      <i class=\"jb-dialog__box__icon__image\">\n      !\n      </div>";
   var footer = document.createElement('div');
 
   if (addFooter) {
-    footer.className = "jb-modal__footer";
+    footer.className = 'jb-dialog__footer';
 
     if (props.centerButtons) {
-      footer.className += ' jb-modal__footer--center';
+      footer.className += ' jb-dialog__footer--center';
     }
 
-    if (props.cancel) {
-      cancelButton.innerText = props.cancel.text;
+    props.buttons.forEach(function (name) {
+      var button = createButton(props, name, input, close, type);
 
-      if (props.cancel.action) {
-        cancelButton.addEventListener('click', props.props.cancel.action, {
-          once: true
-        });
+      if (button) {
+        footer.appendChild(button);
       }
-
-      cancelButton.addEventListener('click', close, {
-        once: true
-      });
-    }
-
-    if (props.ok) {
-      okButton.innerHTML = props.ok.text;
-
-      if (props.ok.action) {
-        okButton.addEventListener('click', type !== 'prompt' ? props.ok.action : function () {
-          props.ok.action(input.value);
-        }, {
-          once: true
-        });
-      }
-
-      okButton.addEventListener('click', close, {
-        once: true
-      });
-    }
-
-    if (addFooter) {
-      if (type !== 'alert') {
-        footer.appendChild(cancelButton);
-      }
-
-      footer.appendChild(okButton);
-    }
+    }); // const cancelButton = document.createElement('button');
+    // cancelButton.className = 'jb-dialog__button jb-dialog__button--cancel';
+    // const okButton = document.createElement('button');
+    // okButton.className = 'jb-dialog__button jb-dialog__button--action';
+    // if (props.cancel) {
+    //   cancelButton.innerText = props.cancel.text;
+    //   if (props.cancel.action) {
+    //     cancelButton.addEventListener('click', props.props.cancel.action, { once: true });
+    //   }
+    //   cancelButton.addEventListener('click', close, { once: true });
+    // }
+    // if (props.ok) {
+    //   okButton.innerHTML = props.ok.text;
+    //   if (props.ok.action) {
+    //     okButton.addEventListener('click', type !== 'prompt' ? props.ok.action : () => {
+    //       props.ok.action(input.value);
+    //     }, { once: true });
+    //   }
+    //   okButton.addEventListener('click', close, { once: true });
+    // }
+    // if (type !== 'alert') {
+    //   footer.appendChild(cancelButton);
+    // }
+    // footer.appendChild(okButton);
   }
 
   var title = document.createElement('div');
-  title.className = "jb-modal__title";
+  title.className = 'jb-dialog__title';
   var text = document.createElement('div');
-  text.className = "jb-modal__text";
+  text.className = 'jb-dialog__text';
   var question = document.createElement('div');
-  question.className = "jb-modal__question";
+  question.className = 'jb-dialog__question';
   title.innerHTML = props.title;
   text.innerHTML = props.message;
 
-  if (type === 'prompt') {
-    inputWrapper.className = 'jb-modal__input__wrapper';
+  if (props.showInput) {
+    inputWrapper.className = 'jb-dialog__input__wrapper';
     input.placeholder = props.placeholder;
     input.value = props.value;
-    input.className = "jb-modal__input";
+    input.className = 'jb-dialog__input';
 
     if (props.label.length > 0) {
-      var label = document.createElement("label");
-      label.className = "jb-modal__input__label";
-      var labelText = document.createElement("span");
+      var label = document.createElement('label');
+      label.className = 'jb-dialog__input__label';
+      var labelText = document.createElement('span');
       labelText.innerHTML = props.label;
       label.appendChild(labelText);
       label.appendChild(input);
@@ -2351,19 +2379,22 @@ var createModal = function createModal(props) {
     content.appendChild(question);
   }
 
-  body.appendChild(icon);
+  if (!props.hideIcon) {
+    body.appendChild(icon);
+  }
+
   body.appendChild(content);
-  modal.appendChild(body);
+  dialog.appendChild(body);
 
   if (addFooter) {
-    modal.appendChild(footer);
+    dialog.appendChild(footer);
   }
 
   if (props.showBackdrop) {
     jackbox.appendChild(backdrop);
   }
 
-  jackbox.appendChild(modal);
+  jackbox.appendChild(dialog);
 
   if (props.duration > -1) {
     setTimeout(function () {
@@ -2377,7 +2408,7 @@ var createModal = function createModal(props) {
     });
   }
 
-  return jackbox;
+  return jackbox; //eslint-disable-line
 };
 
 var globalProps = {
@@ -2394,22 +2425,27 @@ var globalProps = {
   state: 'information',
   type: 'alert',
   centerButtons: false,
+  hideIcon: false,
+  showInput: false,
+  showFooter: true,
   ok: {
-    text: 'Continue'
+    text: 'Continue',
+    className: 'jb-dialog__button--action'
   },
   cancel: {
     text: 'Cancel'
-  }
+  },
+  buttons: ['cancel', 'ok']
 };
 
-var modal_getDefaultProps = function getDefaultProps(userProps, specificProps, globalOverrides) {
-  var global = _objectSpread2(_objectSpread2({}, globalProps), globalOverrides);
+var dialog_getDefaultProps = function getDefaultProps(userProps, dialogProps) {
+  var global = _objectSpread2({}, globalProps);
 
-  var ok = _objectSpread2(_objectSpread2({}, global.ok), userProps.ok || {});
+  var ok = _objectSpread2(_objectSpread2(_objectSpread2({}, global.ok), dialogProps.ok || {}), userProps.ok || {});
 
-  var cancel = _objectSpread2(_objectSpread2({}, globalProps.cancel), userProps.cancel || {});
+  var cancel = _objectSpread2(_objectSpread2(_objectSpread2({}, global.cancel), dialogProps.cancel || {}), userProps.cancel || {});
 
-  return _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, globalProps), specificProps), userProps), {}, {
+  return _objectSpread2(_objectSpread2(_objectSpread2(_objectSpread2({}, globalProps), dialogProps), userProps), {}, {
     ok: ok,
     cancel: cancel
   });
@@ -2422,10 +2458,12 @@ var styles = __webpack_require__("3a62");
 // CONCATENATED MODULE: ./src/vue-jackbox.js
 
 
+/* eslint-disable */
+
 
 var VueJackBox = {
   install: function install(Vue) {
-    Vue.prototype.$confirm = function (userProps) {
+    Vue.prototype.$dialog = function (userProps, dialogProps) {
       if (typeof userProps === 'undefined') {
         console.warn('VueJackBox - You need to add at least some properties');
         return;
@@ -2433,97 +2471,56 @@ var VueJackBox = {
 
       var documentBody = document.body;
       if (!documentBody) return;
-      var properties = modal_getDefaultProps(userProps, {});
-      var jackbox = createModal(_objectSpread2(_objectSpread2({}, properties), {}, {
-        type: 'confirm'
-      }));
+      var properties = dialog_getDefaultProps(userProps, dialogProps || {});
+      var jackbox = createDialog(_objectSpread2({}, properties));
       documentBody.appendChild(jackbox);
       setTimeout(function () {
         jackbox.classList.add('jackbox--show');
       }, 10);
+    };
+
+    Vue.prototype.$confirm = function (userProps) {
+      this.$dialog(userProps, {
+        ok: {
+          text: 'Confirm'
+        },
+        type: 'confirm'
+      });
     };
 
     Vue.prototype.$alert = function (userProps) {
-      if (typeof userProps === 'undefined') {
-        console.warn('VueJackBox - You need to add at least some properties');
-        return;
-      }
-
-      var documentBody = document.body;
-      if (!documentBody) return;
-      var properties = modal_getDefaultProps(userProps, {
-        centerButtons: true
-      }, {
+      this.$dialog(userProps, {
+        centerButtons: true,
         ok: {
           text: 'OK'
-        }
-      });
-      var jackbox = createModal(_objectSpread2(_objectSpread2({}, properties), {}, {
+        },
+        buttons: ['ok'],
         type: 'alert'
-      }));
-      documentBody.appendChild(jackbox);
-      setTimeout(function () {
-        jackbox.classList.add('jackbox--show');
-      }, 10);
+      });
     };
 
     Vue.prototype.$prompt = function (userProps) {
-      if (typeof userProps === 'undefined') {
-        console.warn('VueJackBox - You need to add at least some properties');
-        return;
-      }
-
-      var documentBody = document.body;
-      if (!documentBody) return;
-      var properties = modal_getDefaultProps(userProps, {});
-      var jackbox = createModal(_objectSpread2(_objectSpread2({}, properties), {}, {
+      this.$dialog(userProps, {
+        showInput: true,
         type: 'prompt'
-      }));
-      documentBody.appendChild(jackbox);
-      setTimeout(function () {
-        jackbox.classList.add('jackbox--show');
-      }, 10);
+      });
     };
 
     Vue.prototype.$notification = function (userProps) {
-      if (typeof userProps === 'undefined') {
-        console.warn('VueJackBox - You need to add at least some properties');
-        return;
-      }
-
-      var documentBody = document.body;
-      if (!documentBody) return;
-      var properties = modal_getDefaultProps(userProps, {
+      this.$dialog(userProps, {
         cancelOnBackdrop: true,
-        duration: 2000
-      });
-      var jackbox = createModal(_objectSpread2(_objectSpread2({}, properties), {}, {
+        duration: 2000,
+        showFooter: false,
         type: 'notification'
-      }));
-      documentBody.appendChild(jackbox);
-      setTimeout(function () {
-        jackbox.classList.add('jackbox--show');
-      }, 10);
+      });
     };
 
     Vue.prototype.$toast = function (userProps) {
-      if (typeof userProps === 'undefined') {
-        console.warn('VueJackBox - You need to add at least some properties');
-        return;
-      }
-
-      var documentBody = document.body;
-      if (!documentBody) return;
-      var properties = modal_getDefaultProps(userProps, {
-        showBackdrop: false
-      });
-      var jackbox = createModal(_objectSpread2(_objectSpread2({}, properties), {}, {
+      this.$dialog(userProps, {
+        showBackdrop: false,
+        showFooter: false,
         type: 'toast'
-      }));
-      documentBody.appendChild(jackbox);
-      setTimeout(function () {
-        jackbox.classList.add('jackbox--show');
-      }, 10);
+      });
     };
   }
 }; // Automatic installation if Vue has been added to the global scope.
