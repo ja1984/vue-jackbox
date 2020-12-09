@@ -52,7 +52,7 @@
                   <div class="jb-dialog__body">
                     <aside class="jb-dialog__icon" v-if="showIcon">
                       <div class="jb-dialog__box__outline">
-                        <i class="jb-dialog__box__icon__image"> ! </i>
+                        <i class="jb-dialog__box__icon__image" v-html="icon"></i>
                       </div>
                     </aside>
                     <section class="jb-dialog__content">
@@ -142,7 +142,12 @@
             <div class="form-row">
               <label><input type="checkbox" v-model="showIcon"> Show icon</label>
             </div>
-
+            <div class="form-row" v-if="showIcon">
+              <label>
+                <span class="label__text">Icon</span>
+                <input type="text" v-model="icon">
+              </label>
+            </div>
             <div class="form-row">
               <label><input type="checkbox" v-model="centerButtons"> Center buttons</label>
             </div>
@@ -276,6 +281,7 @@
           showInput: false,
           centerButtons: false,
           showBuilder: true,
+          icon: '!',
         };
       },
       computed: {
@@ -293,6 +299,7 @@
             label: this.label,
             placeholder: this.placeholder,
             hideIcon: !this.showIcon,
+            icon: this.icon,
             showInput: this.showInput,
             centerButtons: this.centerButtons,
           }
@@ -313,6 +320,7 @@
             label: this.label,
             placeholder: this.placeholder,
             hideIcon: !this.showIcon,
+            icon: this.icon,
             showInput: this.showInput,
             centerButtons: this.centerButtons,
           });
