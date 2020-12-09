@@ -5,7 +5,8 @@
   "private": false,
   "main": "dist/vue-jackbox.common.js",
   "files": [
-    "dist/*"
+    "dist/*.js",
+    "dist/*.css"
   ],
   "author": {
     "name": "Jonathan Andersson",
