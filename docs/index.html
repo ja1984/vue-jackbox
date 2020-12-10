@@ -19,13 +19,13 @@
         <div class="column">
           <h1>VueJackBox</h1>
           <p>
-            VueJackBox is a plugin to display beautiful alerts in vue. <a href="https://github.com/ja1984/vue-jackbox" target="_blank">GitHub</a>.
+            VueJackBox is a plugin to display beautiful dialogs in vue. <a href="https://github.com/ja1984/vue-jackbox" target="_blank">GitHub</a>.
           </p>
         </div>
         <div class="column">
           <div class="text-right">
             <p>
-              <strong>Popup state</strong>
+              <strong>Dialog state</strong>
             </p>
             <select v-model="state">
               <option v-for="stateValue in states" :key="stateValue" :value="stateValue">
@@ -33,7 +33,7 @@
               </option>
             </select>
             <p class="small">
-              This affects the styling on all alerts in this demo.
+              This affects the styling on all dialogs in this demo.
             </p>
           </div>
         </div>
@@ -46,7 +46,7 @@
         <div class="column column--large">
           <section class="section">
             <div class="preview">
-              <div class="jackbox demo jackbox--show">
+              <div class="jackbox demo jackbox--show" :class="{'jackbox--dark-theme': darkTheme}">
                 <div class="jackbox__backdrop"></div>
                 <div class="jb-dialog" :class="style">
                   <div class="jb-dialog__body">
@@ -150,6 +150,9 @@
             </div>
             <div class="form-row">
               <label><input type="checkbox" v-model="centerButtons"> Center buttons</label>
+            </div>
+            <div class="form-row">
+              <label><input type="checkbox" v-model="darkTheme"> Dark theme</label>
             </div>
 
             <button @click="testCustom">Try it</button>
@@ -281,6 +284,7 @@
           showInput: false,
           centerButtons: false,
           showBuilder: true,
+          darkTheme: false,
           icon: '!',
         };
       },
@@ -302,6 +306,7 @@
             icon: this.icon,
             showInput: this.showInput,
             centerButtons: this.centerButtons,
+            darkTheme: this.darkTheme,
           }
         },
       },
@@ -323,6 +328,7 @@
             icon: this.icon,
             showInput: this.showInput,
             centerButtons: this.centerButtons,
+            darkTheme: this.darkTheme,
           });
         },
         confirm() {

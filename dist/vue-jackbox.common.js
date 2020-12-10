@@ -2243,6 +2243,10 @@ var createDialog = function createDialog(props) {
   var jackbox = document.createElement('div');
   jackbox.classList.add('jackbox');
 
+  if (props.darkTheme) {
+    jackbox.classList.add('jackbox--dark-theme');
+  }
+
   if (!props.showBackdrop) {
     jackbox.classList.add('jackbox--no-backdrop');
   }
@@ -2397,6 +2401,7 @@ var globalProps = {
   hideIcon: false,
   showInput: false,
   showFooter: true,
+  darkTheme: false,
   icon: '!',
   ok: {
     text: 'Continue',

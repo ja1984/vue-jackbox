@@ -30,8 +30,21 @@
     sans-serif, Apple Color Emoji, Segoe UI Emoji;
   background: var(--jb-color-background, #fff);
   padding: 0;
-  box-shadow: 0 5px 20px 7px #dbe0e3;
+  
+  box-shadow: 0 5px 20px 7px var(--jb-color-shadow, #dbe0e3);
   border-top: 4px solid var(--jb-color-border);
+}
+
+.jackbox--dark-theme {
+  --jb-color-background: #232834;
+  --jb-color-footer-background: rgba(0,0,0, .1);
+  --jb-color-shadow: rgba(0,0,0, .5);
+  --jb-color-title: #eee;
+  --jb-color-title: #efefef;
+  --jb-color-backdrop: rgba(0,0,0,.5);
+  --jb-color-input-background: rgba(255,255,255, 0.1);
+  --jb-color-input-border: rgba(255,255,255, 0.1);
+  --jb-color-input-font: #eee;
 }
 
 .jb-dialog--toast {
@@ -154,7 +167,7 @@
 }
 
 .jb-dialog__footer {
-  background: #f8f9fa;
+  background: var(--jb-color-footer-background, #f8f9fa);
   padding: 15px 10px;
   display: flex;
   justify-content: flex-end;
@@ -179,7 +192,7 @@
   bottom: 0;
   right: 0;
   opacity: 0;
-  background: rgba(245, 248, 250, 0.7);
+  background: var(--jb-color-backdrop,rgba(245, 248, 250, 0.7));
 }
 
 .jackbox .jackbox__backdrop {
@@ -253,10 +266,12 @@
   padding: 7px;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial,
     sans-serif, Apple Color Emoji, Segoe UI Emoji;
-  border: 1px solid #e8e9eb;
+  border: 1px solid var(--jb-color-input-border ,#e8e9eb);
   border-radius: 3px;
   outline: none;
   transition: all ease 0.3s;
+  background: var(--jb-color-input-background, #fff);
+  color: var(--jb-color-input-font, #333);
 }
 
 .jb-dialog__input:hover {
