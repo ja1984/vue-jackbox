@@ -39,6 +39,7 @@ cancel | `object` | _{text: 'Cancel', action: null}_ | Text and callback on canc
 state | `string` | _information_ | Sets color on dialog, options: `information`, `critical`, `warning` ,`success`
 buttons | `string[]` | _['cancel', 'ok']_ | Select which buttons to show, you can add a custom button, but you will also need to add property for that.
 icon | `HTML/String` | _!_ | What icon to display, can me svg, text or img tag
+darkTheme | `boolean` | _false_ | Display dark dialog and darker backdrop color.
 
 
 
